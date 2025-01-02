@@ -1,0 +1,26 @@
+CREATE TABLE users (
+  id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  bio TEXT NOT NULL,
+  latitude DECIMAL(9,6) NOT NULL,
+  longitude DECIMAL(9,6) NOT NULL,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE matches (
+  id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id_1 BIGINT NOT NULL,
+  user_id_2 BIGINT NOT NULL,
+  FOREIGN KEY (user_id_1) REFERENCES users(id),
+  FOREIGN KEY (user_id_2) REFERENCES users(id)
+);
+
+CREATE TABLE swipes (
+  id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_swiped BIGINT NOT NULL,
+  user_swiped_on BIGINT NOT NULL,
+  swipe_type ENUM('left', 'right') NOT NULL,
+  FOREIGN KEY (user_swiped) REFERENCES users(id),
+  FOREIGN KEY (user_swiped_on) REFERENCES users(id)
+);
